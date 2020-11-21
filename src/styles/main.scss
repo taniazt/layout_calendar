@@ -2,6 +2,8 @@
 
 body {
   margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px;
 }
 
 .calendar {
@@ -18,36 +20,38 @@ body {
     border: 1px solid #000;
     margin: 1px;
     cursor: pointer;
+    transition-duration: 0.5s;
+
+    &::after {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   & div:hover {
     background-color: #ffc0cb;
     transform: translateY(-20px);
-    transition-duration: 0.5s;
   }
+}
 
-  @each $days in $days-in-month {
-    &-#{$days} {
-      @for $day from 1 through $days {
-        div:nth-child(#{$day}) {
-          display: block;
-          &::after {
-            content: "#{$day}";
-            display: flex;
-            height: 100%;
-            align-items: center;
-            justify-content: center;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 30px;
-          }
+@each $days in $days-in-month {
+  .calendar-#{$days} {
+    @for $day from 1 through $days {
+      div:nth-child(#{$day}) {
+        display: block;
+        &::after {
+          content: "#{$day}";
+
         }
       }
     }
   }
+}
 
-  @each $day, $number in $days-of-week {
-    &-#{$day} div:first-child {
-      margin-left: $number * 105px - ($number);
-    }
+@each $day, $number in $days-of-week {
+  .calendar-#{$day} div:first-child {
+    margin-left: $number * 105px - ($number - 1);
   }
 }
